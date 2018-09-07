@@ -13,6 +13,14 @@ def home():
 def goals():
     return render_template('Goals.html')
 
+@app.route("/activities")
+def activities():
+    return render_template('Activities.html')
+
+@app.route("/intellect")
+def intellect():
+    return render_template('Intellect.html')
+
 if __name__ == "__main__":
     app.secret_key = "whatever"
     app.run(port=5432, host="0.0.0.0")

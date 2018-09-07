@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-  <link rel="stylesheet" href="niche.css">
+  <link rel="stylesheet" href="static/niche.css">
   <head>
 
     <link rel="shortcut icon" href="./static/icon.ico" />
@@ -9,17 +9,19 @@
   <!-- Colors used on this site are: (orange/red: #db3b0f) (blue: #0f71db) (purple: #a009b7) -->
   </head>
   <body>
-    <div class="row">
-      <div class="col" style="background-color:#db3b0f;">
-        <center><b>Exercise</b></center>
-      </div>
-      <div class="col" style="background-color:#0f71db;">
-        Intellect
-      </div>
-      <div class="col" style="background-color:#a009b7;">
-        Activities
-      </div>
-    </div>
+
+    <ul class="nav nav-pills nav-fill">
+      <li class="nav-item" >
+        <a class="nav-link{%- if request.path == "/goals" %} active{% endif %}" href="/goals">Goals</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link{%- if request.path == "/intellect" %} active{% endif %}" href="/intellect">Intellect</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link{%- if request.path == "/activities" %} active{% endif %}" href="/activities">Activities</a>
+      </li>
+    </ul>
+
     {% block body %}
     {% endblock %}
   </body>
