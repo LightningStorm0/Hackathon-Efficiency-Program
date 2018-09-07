@@ -7,23 +7,23 @@ app = Flask(__name__, template_folder='./templates')
 
 @app.route("/")
 def home():
-    return render_template('login.html')
+    return render_template('about/login.html')
 
 @app.route("/about")
 def about():
-    return render_template('about.html')
+    return render_template('about/about.html')
 
 @app.route("/goals")
 def goals():
-    return render_template('Goals.html')
+    return render_template('app/Goals.html')
 
 @app.route("/activities")
 def activities():
-    return render_template('Activities.html')
+    return render_template('app/Activities.html')
 
 @app.route("/intellect")
 def intellect():
-    return render_template('Intellect.html')
+    return render_template('app/Intellect.html')
 
 if __name__ == "__main__":
     app.secret_key = "whatever"
