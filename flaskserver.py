@@ -15,7 +15,7 @@ def about():
 
 @app.route("/goals")
 def goals():
-    goals = [{"name":"clean room","done_by":"tonight","steps":[{"name":"pick up socks","descrition":"","done":True},{"name":"make bed","descrition":"","done":False}]}]
+    goals = [{"ID":"","name":"clean room","done_by":"tonight","steps":[{"ID":"","name":"pick up socks","description":"","done":True},{"ID":"","name":"make bed","descrition":"","done":False}]}]
     return render_template('app/Goals.html', goals=goals)
 
 @app.route("/activities")
