@@ -1,23 +1,13 @@
 {% extends "base/base.html" %}
 
 {% block body %}
-<div class="row" id="divtop">
-    <div class=col-8>
-      Name
-    </div>
-      <div class=col-2>
-        <span class="badge badge-pill badge-danger">U</span>
-      </div>
-    </div>
-    <div class="w-100"></div>
-    <div class=col-8>
-      <div class="btn-group mr-2" role="group">
-        <button type="button" class="btn btn-success"> </button>
-        <button type="button" class="btn btn-danger"> </button>
-      </div>
-      <div class=col-2>
-      </div>
+{% for i in goals %}
+<div class="card">
+  <div class="card-body">
+    <div class="row">
+      <h5 class="card-title" style="width:100%;">{{ i["name"] }} <span class="badge badge-pill badge-danger">U</span><a style="float:right;">Deadline: {{ i["done_by"] }}</a></h5>
     </div>
   </div>
 </div>
+{% endfor %}
 {% endblock %}

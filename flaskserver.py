@@ -15,9 +15,8 @@ def about():
 
 @app.route("/goals")
 def goals():
-    finished_tasks = []
-    unfinished_tasks = []
-    return render_template('app/Goals.html', finished=finished_tasks, unfinished=unfinished_tasks)
+    goals = [{"name":"clean room","done_by":"tonight","steps":[{"name":"pick up socks","descrition":"","done":True},{"name":"make bed","descrition":"","done":False}]}]
+    return render_template('app/Goals.html', goals=goals)
 
 @app.route("/activities")
 def activities():
