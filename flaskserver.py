@@ -15,7 +15,7 @@ def about():
 
 @app.route("/goals")
 def goals():
-    return render_template('app/Goals.html')
+    return render_template('app/Goals.html', finished=finished_tasks, unfinished=unfinished_tasks)
 
 @app.route("/activities")
 def activities():
