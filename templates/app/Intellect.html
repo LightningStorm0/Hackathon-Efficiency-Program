@@ -1,5 +1,32 @@
 {% extends "base/base.html" %}
 
 {% block body %}
-
+<div style="padding:5px;">
+  <center>
+  {% for j in q2 %}
+  <div class="card" style="width: 18rem;padding-bottom:5px;width:80%;">
+    <div class="card-body">
+      <h5 class="card-title">{{ j["type"] }}</h5>
+      <h6 class="card-subtitle mb-2 text-muted">{{ j["date"] }}</h6>
+      <p class="card-text">{{ j["question"] }}</p>
+      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#answerModal{{ j[id] }}">
+        Answer
+      </button>
+    </div>
+  </div>
+  <div style="padding:5px;">
+  <div class="modal fade" id="answerModal{{ j[id] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content" style="padding:5px;">
+      <div class="modal-body">
+        {{ j["answer"] }}
+      </div>
+      <button type="button" class="btn btn-secondary" data-dismiss="modal">Hide</button>
+    </div>
+</div>
+</div>
+</div>
+  {% endfor %}
+</center>
+</div>
 {% endblock %}
