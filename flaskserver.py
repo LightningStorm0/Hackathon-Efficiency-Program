@@ -21,7 +21,7 @@ app.secret_key = FlaskConfig.secret_key
 
 db = SQLAlchemy(app)
 
-class User(db.Model): 
+class User(db.Model):
     uid = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.Text)
     first_name = db.Column(db.Text)
@@ -51,7 +51,7 @@ class Step(db.Model):
 class RegistrationForm(Form):
     username = StringField('Username:', [validators.Length(min=4, max=25)])
     first_name = StringField('First Name:')
-    last_name = StringField('Last Name:')  
+    last_name = StringField('Last Name:')
     dob = DateField('Date of Birth:')
     gender = SelectField('Gender', choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')])
     email = StringField('Email Address:', [validators.Email()])
@@ -99,7 +99,7 @@ def signup():
         db.session.commit()
         flash('Registration complete.')
         return redirect(url_for('home'))
-        
+
     return render_template('about/register.html', form=form)
 
 @app.route("/about")
@@ -120,7 +120,12 @@ def activities():
 
 @app.route("/intellect")
 def intellect():
-    return render_template('app/Intellect.html')
+    questions = [{"id":"129","date": datetime.date(2018, 9, 8),"type":"riddle","question":"This five letter word becomes shorter when you add two letters to it. What is the word?","answer":"Short"},{"id":"128","date": datetime.date(2018, 9, 8),"type":"math","question":"Factor: 6x^2 - 11x - 10","answer":"(2x-5)(3x+2)"}]
+    questions2=[]
+    for i in questions:
+        if i["date"] == datetime.date.today():
+            questions2.append(i)
+    return render_template('app/Intellect.html', q2=questions2)
 
 @app.route("/logout")
 def logout():
