@@ -2,6 +2,7 @@
 
 {% block body %}
 <div style="padding:10px;">
+{% if goals == None %}
 {% for i in goals %}
 <div class="card">
   <div class="card-header">
@@ -23,5 +24,15 @@
   </div>
 </div>
 {% endfor %}
+{% else %}
+<div class="card">
+  <div class="card-header">
+    <h5 class="card-title" style="width:100%;">No goals were found!</h5>
+    <div class="card-body">
+      Create your own at the bottom of this page...
+    </div>
+  </div>
+</div>
+{% endif %}
 </div>
 {% endblock %}

@@ -17,6 +17,8 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{}:{}@{}/{}".format(
     PostgresConfig.db
 )
 
+app.secret_key = FlaskConfig.secret_key
+
 db = SQLAlchemy(app)
 
 class User(db.Model): 
@@ -28,7 +30,7 @@ class User(db.Model):
     pw_hash = db.Column(db.Text)
     dob = db.Column(db.Date)
     gender = db.Column(db.Enum('Male', 'Female', 'Other', name='gender'))
-    email = db.Column(db.Text)
+    email = db.Column(db.Text, unique=True)
     email_confirmed = db.Column(db.Boolean)
     goals = db.relationship('Goal', backref='user')
 
@@ -94,6 +96,7 @@ def signup():
         )
         print(new_user)
         db.session.add(new_user)
+        db.session.commit()
         flash('Registration complete.')
         return redirect(url_for('home'))
         
@@ -105,7 +108,10 @@ def about():
 
 @app.route("/goals")
 def goals():
-    goals = User.query.filter_by(uid=session['uid']).first().goals
+    if session.get("uid") == None:
+        return redirect(url_for('home'))
+    user = User.query.filter_by(uid=session['uid']).first()
+    goals = user.goals if user.goals != None else None
     return render_template('app/Goals.html', goals=goals)
 
 @app.route("/activities")
@@ -123,5 +129,4 @@ def logout():
 
 
 if __name__ == "__main__":
-    app.secret_key = FlaskConfig.secret_key
     app.run(port=5432, host="0.0.0.0")
