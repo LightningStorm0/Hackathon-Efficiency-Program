@@ -17,7 +17,26 @@ db = SQLAlchemy(app)
 
 class User(db.Model):
     uid = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    tag = db.Column(db.Integer)
+    birthday = db.Column(db.DateTime)
+    email = db.Column(db.Text)
+    email_confirmed = db.Column(db.Boolean)
+    goals = db.relationship('Goal', backref='user')
 
+class Goal(db.Model):
+    goal_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    done_by = db.Column(db.DateTime)
+    uid = db.Column(db.Integer, db.ForeignKey('user.uid'))
+    steps = db.relationship('Step', backref='goal')
+
+class Step(db.Model):
+    step_id = db.Column(db.Integer, primary_key=True)
+    name = db.Column(db.Text)
+    desc = db.Column(db.Text)
+    done = db.Column(db.Boolean)
+    goal_id = db.Column(db.Integer, db.ForeignKey('goal.goal_id'))
 
 @app.route("/")
 def home():
