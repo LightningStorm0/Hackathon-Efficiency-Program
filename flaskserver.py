@@ -16,7 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{}:{}@{}/{}".format(
 
 db = SQLAlchemy(app)
 
-class User(db.Model):
+class User(db.Model): 
     uid = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.Text)
     first_name = db.Column(db.Text)
@@ -24,6 +24,7 @@ class User(db.Model):
     tag = db.Column(db.Integer)
     pw_hash = db.Column(db.LargeBinary)
     dob = db.Column(db.Date)
+    gender = db.Column(db.Enum('Male', 'Female', 'Other', name='gender'))
     email = db.Column(db.Text)
     email_confirmed = db.Column(db.Boolean)
     goals = db.relationship('Goal', backref='user')
