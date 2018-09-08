@@ -111,8 +111,9 @@ def goals():
     if session.get("uid") == None:
         return redirect(url_for('home'))
     user = User.query.filter_by(uid=session['uid']).first()
-    goals = user.goals if user.goals != None else None
-    return render_template('app/Goals.html', goals=goals)
+    goals = user.goals
+    lgoals = len(goals)
+    return render_template('app/Goals.html', goals=goals, lgoals=lgoals)
 
 @app.route("/activities")
 def activities():
