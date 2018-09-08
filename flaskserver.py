@@ -1,10 +1,13 @@
 import os
 import datetime
 from flask import Flask
-from flask import Flask, flash, redirect, render_template, request, session, abort
+from flask import Flask, flash, redirect, render_template, request, session, abort, url_for
+from wtforms import Form, BooleanField, StringField, PasswordField, validators, SelectField, DateField
 from flask_sqlalchemy import SQLAlchemy
 from secrets_config import FlaskConfig, PostgresConfig
 from werkzeug.security import generate_password_hash, check_password_hash
+from snowflakes import get_snowflake
+import random
 
 app = Flask(__name__, template_folder='./templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{}:{}@{}/{}".format(
@@ -43,18 +46,58 @@ class Step(db.Model):
     done = db.Column(db.Boolean)
     goal_id = db.Column(db.BigInteger, db.ForeignKey('goal.goal_id'))
 
-@app.route("/")
+class RegistrationForm(Form):
+    username = StringField('Username:', [validators.Length(min=4, max=25)])
+    first_name = StringField('First Name:')
+    last_name = StringField('Last Name:')  
+    dob = DateField('Date of Birth:')
+    gender = SelectField('Gender', choices=[('Male', 'Male'), ('Female', 'Female'), ('Other', 'Other')])
+    email = StringField('Email Address:', [validators.Email()])
+    password = PasswordField('Create Password:', [
+        validators.DataRequired(),
+        validators.Length(min=8),
+        validators.EqualTo('confirm', message='Passwords must match')
+    ])
+    confirm = PasswordField('Repeat Password:')
+
+class SignInForm(Form):
+    email = StringField('Email Address:', [validators.Email()])
+    password = PasswordField('Password:', [
+        validators.DataRequired()
+    ])
+
+@app.route("/", methods=['GET','POST'])
 def home():
-    return render_template('about/login.html')
-
-
-@app.route("/register")
-def signup():
-    return render_template('about/register.html', years=range(1900, 2019), months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], days=range(1,32))
+    form = SignInForm(request.form)
+    if request.method == 'POST' and form.validate():
+        login_user = User.query.filter_by(email=form.email.data).first()
+        if check_password_hash(login_user.pw_hash, form.password.data):
+            session['uid'] = login_user.uid
+            return redirect(url_for('goals'))
+    return render_template('about/login.html', form=form)
 
 @app.route("/register", methods=['GET', 'POST'])
-def signup2():
-    return render_template('about/complete.html', years=range(1900, 2019), months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], days=range(1,32))
+def signup():
+    form = RegistrationForm(request.form)
+    if request.method == 'POST' and form.validate():
+        new_user = User(
+            uid=get_snowflake('user'),
+            name=form.username.data,
+            first_name=form.first_name.data,
+            last_name=form.last_name.data,
+            tag=random.randint(1,9999),
+            dob=form.dob.data,
+            gender=form.gender.data,
+            email=form.email.data,
+            pw_hash=generate_password_hash(form.password.data),
+            email_confirmed=False
+        )
+        print(new_user)
+        db.session.add(new_user)
+        flash('Registration complete.')
+        return redirect(url_for('home'))
+        
+    return render_template('about/register.html', form=form)
 
 @app.route("/about")
 def about():
@@ -62,7 +105,7 @@ def about():
 
 @app.route("/goals")
 def goals():
-    goals = User.query.filter_by(uid=308060551643136).first().goals
+    goals = User.query.filter_by(uid=session['uid']).first().goals
     return render_template('app/Goals.html', goals=goals)
 
 @app.route("/activities")
@@ -72,6 +115,12 @@ def activities():
 @app.route("/intellect")
 def intellect():
     return render_template('app/Intellect.html')
+
+@app.route("/logout")
+def logout():
+    session.pop('uid', None)
+    return redirect(url_for('home'))
+
 
 if __name__ == "__main__":
     app.secret_key = FlaskConfig.secret_key
