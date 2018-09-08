@@ -16,7 +16,7 @@ app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{}:{}@{}/{}".format(
 db = SQLAlchemy(app)
 
 class User(db.Model):
-    uid = db.Column(db.Text)
+    uid = db.Column(db.Integer, primary_key=True)
 
 
 @app.route("/")
