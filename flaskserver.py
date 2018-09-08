@@ -22,7 +22,7 @@ class User(db.Model):
     first_name = db.Column(db.Text)
     last_name = db.Column(db.Text)
     tag = db.Column(db.Integer)
-    pw_hash = db.Column(db.LargeBinary)
+    pw_hash = db.Column(db.Text)
     dob = db.Column(db.Date)
     gender = db.Column(db.Enum('Male', 'Female', 'Other', name='gender'))
     email = db.Column(db.Text)
