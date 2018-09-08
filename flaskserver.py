@@ -4,6 +4,7 @@ from flask import Flask
 from flask import Flask, flash, redirect, render_template, request, session, abort
 from flask_sqlalchemy import SQLAlchemy
 from secrets_config import FlaskConfig, PostgresConfig
+from werkzeug.security import generate_password_hash, check_password_hash
 
 app = Flask(__name__, template_folder='./templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{}:{}@{}/{}".format(
@@ -18,8 +19,11 @@ db = SQLAlchemy(app)
 class User(db.Model):
     uid = db.Column(db.BigInteger, primary_key=True)
     name = db.Column(db.Text)
+    first_name = db.Column(db.Text)
+    last_name = db.Column(db.Text)
     tag = db.Column(db.Integer)
-    birthday = db.Column(db.Date)
+    pw_hash = db.Column(db.LargeBinary)
+    dob = db.Column(db.Date)
     email = db.Column(db.Text)
     email_confirmed = db.Column(db.Boolean)
     goals = db.relationship('Goal', backref='user')
