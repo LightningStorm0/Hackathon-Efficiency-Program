@@ -2,8 +2,21 @@ import os
 import datetime
 from flask import Flask
 from flask import Flask, flash, redirect, render_template, request, session, abort
+from flask_sqlalchemy import SQLAlchemy
+from secrets_config import FlaskConfig, PostgresConfig
 
 app = Flask(__name__, template_folder='./templates')
+app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{}:{}@{}/{}".format(
+    PostgresConfig.username,
+    PostgresConfig.password,
+    PostgresConfig.host, 
+    PostgresConfig.db
+)
+db = SQLAlchemy(app)
+
+class User(db.Model):
+    
+
 
 @app.route("/")
 def home():
