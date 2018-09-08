@@ -4,17 +4,17 @@
 {% for i in goals %}
 <div class="card">
   <div class="card-header">
-    <h5 class="card-title" style="width:100%;">{{ i["name"] }} <span class="badge badge-pill badge-danger">U</span><a style="float:right;">Deadline: {{ i["done_by"] }}</a></h5>
+    <h5 class="card-title" style="width:100%;">{{ i.name }} <span class="badge badge-pill badge-danger">U</span><a style="float:right;">Deadline: {{ i.done_by }}</a></h5>
     <div class="card-body">
       <div class="btn-group" role="group">
-        {% for j in i["steps"] %}
+        {% for j in i.steps %}
           <div class="dropdown">
-            <button type="button" class="btn btn-{% if j["done"]==True %}success{% else %}danger{% endif %} dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ j["name"] }}</button>
-            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-              <a class="dropdown-item">{{ j["description"] }}</a>
-              <div class="dropdown-divider"></div>
-              <a class="dropdown-item" href="/complete?g={{ i["ID"] }}&t={{ j["ID"] }}">Task Completed</a>
-            </div>
+            <button type="button" class="btn btn-{% if j.done %}success{% else %}danger{% endif %} dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">{{ j.name }}</button>
+            <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+              <li><a class="dropdown-item" href="#">{{ j.desc }}</a></li>
+              <li role="separator" class="dropdown-divider"></li>
+              <li><a class="dropdown-item" href="/complete?g={{ i.id }}&t={{ j.id }}">Task Completed</a></li>
+            </ul>
           </div>
         {% endfor %}
       </div>
