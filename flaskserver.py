@@ -46,9 +46,14 @@ class Step(db.Model):
 def home():
     return render_template('about/login.html')
 
+
 @app.route("/register")
 def signup():
     return render_template('about/register.html', years=range(1900, 2019), months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], days=range(1,32))
+
+@app.route("/register", methods=['GET', 'POST'])
+def signup2():
+    return render_template('about/complete.html', years=range(1900, 2019), months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], days=range(1,32))
 
 @app.route("/about")
 def about():
