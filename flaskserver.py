@@ -121,7 +121,8 @@ def activities():
 
 @app.route("/intellect")
 def intellect():
-    questions = [{"id":"129","date": datetime.date(2018, 9, 8),"type":"riddle","question":"This five letter word becomes shorter when you add two letters to it. What is the word?","answer":"Short"},{"id":"128","date": datetime.date(2018, 9, 8),"type":"math","question":"Factor: 6x^2 - 11x - 10","answer":"(2x-5)(3x+2)"}]
+    questions = [{"id":"129","date": datetime.date(2018, 9, 8),"type":"riddle","question":"This five letter word becomes shorter when you add two letters to it. What is the word?","answer":"Short"},
+                 {"id":"128","date": datetime.date(2018, 9, 8),"type":"math","question":"Factor: 6x^2 - 11x - 10","answer":"(2x-5)(3x+2)"}]
     questions2=[]
     for i in questions:
         if i["date"] == datetime.date.today():
