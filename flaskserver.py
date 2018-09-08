@@ -9,7 +9,7 @@ app = Flask(__name__, template_folder='./templates')
 app.config['SQLALCHEMY_DATABASE_URI'] = "postgresql://{}:{}@{}/{}".format(
     PostgresConfig.username,
     PostgresConfig.password,
-    PostgresConfig.host, 
+    PostgresConfig.host,
     PostgresConfig.db
 )
 
@@ -41,6 +41,10 @@ class Step(db.Model):
 @app.route("/")
 def home():
     return render_template('about/login.html')
+
+@app.route("/register")
+def signup():
+    return render_template('about/register.html', years=range(1900, 2019), months=["Jan","Feb","Mar","Apr","May","Jun","Jul","Aug","Sep","Oct","Nov","Dec"], days=range(1,32))
 
 @app.route("/about")
 def about():

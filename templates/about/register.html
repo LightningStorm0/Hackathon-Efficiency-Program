@@ -1,5 +1,52 @@
 {% extends "base/textbase.html" %}
 
 {% block body %}
-
+<form>
+  <div class="form-group" class="form-control">
+    <label>First Name</label>
+    <input type="text" name="FirstName" placeholder="John" class="form-control" class="form-control"></input>
+    <br />
+    <label>Last Name</label>
+    <input type="text" name="LastName" placeholder="Smith" class="form-control"></input>
+    <br />
+    <label>Nickname/Username</label>
+    <input type="text" name="NickName" placeholder="Johny" class="form-control"></input>
+    <br />
+    <label>Email</label>
+    <input type="text" name="Email" placeholder="johnsmith@gmail.com" class="form-control"></input>
+    <br />
+    <label>Birthday</label>
+    <div class="row">
+      <div class="col">
+        <select name="BirthYear" class="form-control">
+          {% for i in years %}
+          <option>{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <select name="BirthMonth" class="form-control">
+          {% for i in months %}
+          <option>{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="col">
+        <select name="BirthDay" class="form-control">
+          {% for i in days %}
+          <option>{{ i }}</option>
+          {% endfor %}
+        </select>
+      </div>
+    </div>
+    <br />
+    <label></label>
+    <label>Male</label>
+    <input type="radio" name="Gender" value="Male" class="form-control"></input>
+    <label>Female</label>
+    <input type="radio" name="Gender" value="Female" class="form-control"></input>
+    <label>Other</label>
+    <input type="radio" name="Gender" value="Other" class="form-control"></input>
+  </div>
+</form>
 {% endblock %}
