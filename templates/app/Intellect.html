@@ -4,7 +4,7 @@
 <div style="padding-top:5px;">
   <center>
   {% for j in q2 %}
-  <div class="card" style="width: 18rem;padding-bottom:5px;width:80%;">
+  <div class="card" style="width: 18rem;width:80%;">
     <div class="card-body">
       <h5 class="card-title">{{ j["type"] }}</h5>
       <h6 class="card-subtitle mb-2 text-muted">{{ j["date"] }}</h6>
@@ -12,9 +12,10 @@
       <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#answerModal{{ j["id"] }}">
         Answer
       </button>
+      <h6 style="font-size:9pt;padding-top:10px;">Learn about <b>{{ j["topic"] }}</b> on khanacademy <a href="{{ j["link"] }}">here<a>!</h6>
     </div>
   </div>
-  <div style="padding:5px;">
+  <div style="padding-top:5px;">
   <div class="modal fade" id="answerModal{{ j["id"] }}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document">
     <div class="modal-content" style="padding:5px;">

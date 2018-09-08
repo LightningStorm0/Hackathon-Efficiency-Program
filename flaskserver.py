@@ -122,8 +122,9 @@ def activities():
 
 @app.route("/intellect")
 def intellect():
-    questions = [{"id":"129","date": datetime.date(2018, 9, 8),"type":"riddle","question":"This five letter word becomes shorter when you add two letters to it. What is the word?","answer":"Short"},
-                 {"id":"128","date": datetime.date(2018, 9, 8),"type":"math","question":"Factor: 6x² - 11x - 10","answer":"(2x-5)(3x+2)"}]
+    questions = [{"topic":"adjectives","link":"https://www.khanacademy.org/humanities/grammar/parts-of-speech-the-modifier/introduction-to-adjectives-and-articles/v/intro-to-adjectives-v1","id":"129","date": datetime.date(2018, 9, 8),"type":"riddle","question":"This five letter word becomes shorter when you add two letters to it. What is the word?","answer":"Short"},
+                 {"topic":"factoring","link":"https://www.khanacademy.org/math/algebra/polynomial-factorization/factoring-quadratics-1/v/factoring-quadratic-expressions","id":"128","date": datetime.date(2018, 9, 8),"type":"math","question":"Factor: 6x² - 11x - 10","answer":"(2x-5)(3x+2)"},
+                 {"topic":"nouns","link":"https://www.khanacademy.org/humanities/grammar/parts-of-speech-the-noun","id":"130","date": datetime.date(2018, 9, 8),"type":"riddle","question":"When you need me, you throw me away. But when you're done with me, you bring me back. What am I?","answer":"An Anchor"}]
     questions2=[]
     for i in questions:
         if i["date"] == datetime.date.today():
