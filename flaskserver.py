@@ -62,7 +62,7 @@ def about():
 
 @app.route("/goals")
 def goals():
-    goals = User.query.filter_by(uid=238164492943360).first().goals
+    goals = User.query.filter_by(uid=308060551643136).first().goals
     return render_template('app/Goals.html', goals=goals)
 
 @app.route("/activities")
